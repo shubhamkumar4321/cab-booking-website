@@ -5,4 +5,5 @@ flask_sqlalchemy==3.1.1
 flask_wtf==1.2.1
 Requests==2.31.0
 WTForms==3.1.2
+email-validator==2.1.0.post1
 gunicorn
