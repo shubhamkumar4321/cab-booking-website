@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}
+Booking Page
+{% endblock %}
+{% block content %}
+<div class="row" style="margin-top:20px; margin-left:20px">
+   <div class="col-7">
+      <br>
+      <div class="container">
+         <form method="POST" class="form" style="color:white">
+
+            {{ form.hidden_tag() }}
+            <h1>Go anywhere with us.</h1>
+            <br>
+
+            <h3>Book the Ride</h3>
+            <br>
+            {{ form.location.label() }}
+            {{ form.location(class="form-control", placeholder="Enter Location") }}
+            <br>
+            {{ form.destination.label() }}
+            {{ form.destination(class="form-control", placeholder="Enter Destination") }}
+
+            <br>
+            
+            {{ form.submit(class="btn btn-lg btn-primary") }}
+            <br>
+         </form>
+      </div>
+   </div>
+   <div class="col-4">
+      <h3>Bookings</h3>
+      <br>
+      <div class="row">
+         {% for owned_item in owned_items %}
+         {% include 'includes/booking_cancellation_modal.html' %}
+
+         <div class="col-md-12">
+            <div style="margin-bottom: 5px" class="card text-center bg-dark">
+               <div class="card-body">
+                  <h2 class="card-title"> <strong>{{owned_item.source}} ------> {{owned_item.destination}}</strong></h2>
+                  <h5 class="card-title"> <strong>Distance ------> {{owned_item.distance}} KM</strong></h5>
+                  <h5 class="card-title"> <strong>Fare ------> {{owned_item.price}} Rs</strong></h5>
+
+                  <button type="button" class="btn btn-outline-danger" style="margin-bottom: 5px"
+                     data-toggle="modal" data-target="#Modal-CancellationConfirm-{{ owned_item.id }}">
+Cancel the trip
+                  
+                  </button>
+                  <p class="card-text"><strong>
+                    Distance of the trip is {{owned_item.distance}} KM and Cost of the trip is {{owned_item.price}} Rs
+                 </strong></p>
+               </div>
+            </div>
+         </div>
+         {% endfor %}
+      </div>
+   </div>
+</div>
+{% endblock %}
+

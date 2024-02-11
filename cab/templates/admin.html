@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}
+    Admin Page
+{% endblock %}
+{% block content %}
+
+<table class="table table-hover table-dark">
+    <thead>
+       <tr>
+          <!-- Your Columns HERE -->
+          <th scope="col">Username</th>
+          <th scope="col">Source</th>
+          <th scope="col">Destination</th>
+          <th scope="col">Distance</th>
+          <th scope="col">Price</th>
+       </tr>
+    </thead>
+    <tbody>
+       <!-- Your rows inside the table HERE: -->
+       {% for item in items %}
+       <tr>
+          <td>{{ item.username }}</td>
+          <td>{{ item.source }}</td>
+          <td>{{ item.destination }}</td>
+          <td>{{item.distance}} KM</td>
+          <td>{{ item.price }} Rs</td>
+          
+       </tr>
+       {% endfor %}
+    </tbody>
+ </table>
+
+{% endblock %}

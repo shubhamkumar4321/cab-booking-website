@@ -1,0 +1,1 @@
+username={{ current_user.username }}
