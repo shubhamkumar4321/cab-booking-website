@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, HiddenField
+from wtforms import StringField, PasswordField, SubmitField, HiddenField,TimeField,DateField,DateTimeField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
 from cab.models import User
+from datetime import datetime
 
 
 
@@ -32,6 +33,8 @@ class LoginForm(FlaskForm):
 class Booking_Form(FlaskForm):
     location=StringField(label='Enter Location', validators=[DataRequired()])
     destination=StringField(label='Enter Destination', validators=[DataRequired()])
+    dates = DateField('Date', format='%Y-%m-%d', default=datetime.now().date,validators=[DataRequired()])
+    times = TimeField('Time', format='%H:%M', default=datetime.now(),validators=[DataRequired()])
     submit = SubmitField(label='Book the Ride')
 
 class VerifyForm(FlaskForm):

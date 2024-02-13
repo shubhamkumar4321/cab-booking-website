@@ -3,7 +3,7 @@
 Booking Page
 {% endblock %}
 {% block content %}
-<div class="row" style="margin-top:20px; margin-left:20px">
+<div class="row" style="margin-top:20px; margin-left:10px">
    <div class="col-7">
       <br>
       <div class="container">
@@ -22,13 +22,21 @@ Booking Page
             {{ form.destination(class="form-control", placeholder="Enter Destination") }}
 
             <br>
+
+           
+            {{ form.dates.label() }}
+            {{ form.dates(class="form-control", placeholder="Time") }}
+            <br>
+            {{ form.times.label() }}
+            {{ form.times(class="form-control", placeholder="Time") }}
+            <br>
             
             {{ form.submit(class="btn btn-lg btn-primary") }}
             <br>
          </form>
       </div>
    </div>
-   <div class="col-4">
+   <div class="col-4 ml-4">
       <h3>Bookings</h3>
       <br>
       <div class="row">
@@ -36,20 +44,24 @@ Booking Page
          {% include 'includes/booking_cancellation_modal.html' %}
 
          <div class="col-md-12">
-            <div style="margin-bottom: 5px" class="card text-center bg-dark">
+            <div style="margin-bottom: 0px" class="card text-center bg-dark">
                <div class="card-body">
                   <h2 class="card-title"> <strong>{{owned_item.source}} ------> {{owned_item.destination}}</strong></h2>
-                  <h5 class="card-title"> <strong>Distance ------> {{owned_item.distance}} KM</strong></h5>
-                  <h5 class="card-title"> <strong>Fare ------> {{owned_item.price}} Rs</strong></h5>
+                  <h6 class="card-title"> Date ------> {{owned_item.dates}} </h6>
+                  <h6 class="card-title"> Timing ------> {{owned_item.times}}</h6>
 
-                  <button type="button" class="btn btn-outline-danger" style="margin-bottom: 5px"
+                  <h6 class="card-title"> Distance ------> {{owned_item.distance}} KM</h6>
+                  <h6 class="card-title"> Fare ------> {{owned_item.price}} Rs</h6>
+                  
+                
+
+
+                  <button type="button" class="btn btn-outline-danger" style="margin-bottom: 0px; margin-top: 2px;"
                      data-toggle="modal" data-target="#Modal-CancellationConfirm-{{ owned_item.id }}">
 Cancel the trip
                   
                   </button>
-                  <p class="card-text"><strong>
-                    Distance of the trip is {{owned_item.distance}} KM and Cost of the trip is {{owned_item.price}} Rs
-                 </strong></p>
+                
                </div>
             </div>
          </div>

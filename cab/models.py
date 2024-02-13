@@ -35,7 +35,8 @@ class Registration_Info(db.Model, UserMixin):
     source = db.Column(db.String())
     destination=db.Column(db.String())
     distance=db.Column(db.Integer())
-    
+    dates = db.Column(db.Date())
+    times = db.Column(db.Time())
     price=db.Column(db.Integer())
 
 

@@ -9,15 +9,20 @@
 
 <form method="POST" class="form" style="color:white">
     {{ form.hidden_tag() }}
-    <h2>Your Location</h2><h4>{{source}}</h4>
+    <h3>Your Location</h3><h5>{{source}}</h5>
     <br>
 
-    <h2>Your Destination</h2><h4>{{destination}}</h4>
+    <h3>Your Destination</h3><h5>{{destination}}</h5>
     <br>
-    <h2>Distance</h2><h4>{{distance}} KM</h4>
+    <h3>Date</h3><h5>{{dates}}</h5>
+    <br>
+    <h3>Timing</h3><h5>{{times}} KM</h5>
     <br>
 
-    <h2>Fare</h2><h4>{{fare}} Rs</h4>
+    <h3>Distance</h3><h5>{{distance}} KM</h5>
+    <br>
+
+    <h3>Fare</h3><h5>{{fare}} Rs</h5>
     <br>
    
     {{ form.submit(class="btn btn-lg btn-block btn-primary") }}

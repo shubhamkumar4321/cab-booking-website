@@ -6,20 +6,17 @@ from cab.forms import RegisterForm, LoginForm,Booking_Form,VerifyForm,Cancellati
 from cab import db
 from flask_login import login_user, logout_user, login_required, current_user
 from cab.distance_calculation import find_the_distance
+from datetime import datetime,date,time
 
 
 @app.route('/')
 @app.route('/home')
 def home_page():
-    # if current_user.is_authenticated:
-    #     if(current_user.username=="admin"):
-    #         items = Registration_Info.query.all()
+    if (current_user.is_authenticated and current_user.username=="admin"):
+            items = Registration_Info.query.all()
+            return render_template('admin.html',items=items)
 
-    #         return render_template('admin.html',items=items)
-
-
-    
-    # else:
+    else:
         return render_template('home.html')
 
 @app.route('/admin_page')
@@ -43,29 +40,34 @@ def booking_page():
                 db.session.commit()
                 flash("Your Ride is cancelled Successfully",category='success')
 
-
             
             if form.validate_on_submit():
                 global source
                 global destination
                 global distance
                 global price
+                global dates
+                global times
+                
                 source=form.location.data
                 source=source.capitalize()
                 destination=form.destination.data
                 destination=destination.capitalize()
                 distance=find_the_distance(source,destination)
                 price=distance*5
+                dates=form.dates.data
+                times=form.times.data
 
                 session['source']=source
                 session['destination']=destination
                 session['distance']=distance
                 session['price']=price
+                session['dates']=dates
+                session['times']=times.isoformat()
 
                 
                 return redirect(url_for("verify_page"))
             
-               
             return redirect(url_for('booking_page'))
 
 
@@ -74,7 +76,7 @@ def booking_page():
             return render_template('booking.html',form=form,owned_items=items,cancel_form=cancel_form)
             
 
-        
+
 @app.route('/verify', methods=['GET', 'POST'])
 def verify_page():
    form=VerifyForm()
@@ -82,8 +84,15 @@ def verify_page():
    destination=session['destination']
    price=session['price']
    distance=session['distance']
+
+   dates_str=session['dates']
+   dates = datetime.strptime(dates_str, '%a, %d %b %Y %H:%M:%S %Z').date()
+
+   times = time.fromisoformat(session['times'])
+
+#    times=session['times']
    if form.validate_on_submit():
-        tour_info=Registration_Info(username= current_user.username ,source=source,destination=destination,distance=distance,price=price)
+        tour_info=Registration_Info(username= current_user.username ,source=source,destination=destination,distance=distance,price=price,dates=dates,times=times)
         db.session.add(tour_info)
         db.session.commit()
         flash("Your booking is successful",category='success')
@@ -91,7 +100,7 @@ def verify_page():
 
 
    
-   return render_template('verify_page.html',source=source,form=form,destination=destination,fare=price,distance=distance)
+   return render_template('verify_page.html',source=source,form=form,destination=destination,fare=price,distance=distance,dates=dates,times=times)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
